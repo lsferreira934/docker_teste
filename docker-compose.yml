@@ -1,17 +1,19 @@
-version: '3'
+version: '3.8'
 
 services:
+# --------------------------BACKEND----------------------------------------
     backend:
         image: python
         volumes:
             - ./backend:/backend
         ports:
             - 5000:5000
-        command: bash -c "cd /backend && pip install -r requirements.txt && flask run"
-
+        command: bash -c "cd /backend && pip install -r requirements.txt && flask run --host 0.0.0.0"
+# --------------------------FRONTEND COM NGINX----------------------------------------      
     frontend:
-        image: nginx
+        image: node
         volumes:
-            - ./frontend:/usr/share/nginx/html/
+            - ./frontend:/frontend
         ports:
-            - 80:80
+            - 80:3000
+        command: bash -c "cd /frontend && npm start"
